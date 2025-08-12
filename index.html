@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Perfect Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .quiz-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .quiz-content {
+            padding: 40px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .question {
+            display: none;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.3s ease;
+        }
+        
+        .question.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .question h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .question-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        .option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .option-text {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .option-desc {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #666;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: #e0e0e0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+        }
+        
+        .results.active {
+            display: block;
+        }
+        
+        .results h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .results-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .course-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: left;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .course-card.rank-1 { border-left-color: #FFD700; }
+        .course-card.rank-2 { border-left-color: #C0C0C0; }
+        .course-card.rank-3 { border-left-color: #CD7F32; }
+        
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .course-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .match-score {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .course-desc {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .course-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .course-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+        }
+        
+        .restart-btn {
+            margin-top: 30px;
+            background: #f0f0f0;
+            color: #666;
+        }
+        
+        .restart-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-content {
+                padding: 20px;
+            }
+            
+            .question h2 {
+                font-size: 20px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        .intro {
+            text-align: center;
+            display: block;
+        }
+        
+        .intro h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .intro-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        
+        .start-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <div class="quiz-content">
+            <!-- Intro Screen -->
+            <div class="intro" id="intro">
+                <h1>Find your perfect course</h1>
+                <p class="intro-subtitle">Answer a few quick questions to discover which professional development course matches your goals and challenges.</p>
+                <button class="start-btn" onclick="startQuiz()">Start quiz</button>
+            </div>
+            
+            <!-- Question 1: Role -->
+            <div class="question" id="q1">
+                <h2>What best describes your current role?</h2>
+                <p class="question-subtitle">This helps us understand your responsibilities and challenges.</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(1, 'individual')">
+                        <div class="option-text">Individual contributor</div>
+                        <div class="option-desc">Focus on personal productivity and skills</div>
+                    </div>
+                    <div class="option" onclick="selectOption(1, 'team_lead')">
+                        <div class="option-text">Team lead / Manager</div>
+                        <div class="option-desc">Managing people and projects</div>
+                    </div>
+                    <div class="option" onclick="selectOption(1, 'executive')">
+                        <div class="option-text">Senior executive / Director</div>
+                        <div class="option-desc">Strategic leadership and organization</div>
+                    </div>
+                    <div class="option" onclick="selectOption(1, 'entrepreneur')">
+                        <div class="option-text">Entrepreneur / Freelancer</div>
+                        <div class="option-desc">Building and growing business</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Question 2: Main Challenge -->
+            <div class="question" id="q2">
+                <h2>What's your biggest workplace challenge?</h2>
+                <p class="question-subtitle">Select the area where you'd most like to improve.</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(2, 'communication')">
+                        <div class="option-text">Communication & Presentation</div>
+                        <div class="option-desc">Speaking, presenting, cross-cultural interaction</div>
+                    </div>
+                    <div class="option" onclick="selectOption(2, 'productivity')">
+                        <div class="option-text">Time & Productivity</div>
+                        <div class="option-desc">Managing time, focus, and distractions</div>
+                    </div>
+                    <div class="option" onclick="selectOption(2, 'leadership')">
+                        <div class="option-text">Leadership & Management</div>
+                        <div class="option-desc">Leading teams, emotional intelligence, project management</div>
+                    </div>
+                    <div class="option" onclick="selectOption(2, 'stress')">
+                        <div class="option-text">Stress & Wellbeing</div>
+                        <div class="option-desc">Managing stress, work-life balance, mental health</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Question 3: Work Environment -->
+            <div class="question" id="q3">
+                <h2>What's your work environment like?</h2>
+                <p class="question-subtitle">Understanding your context helps us recommend relevant skills.</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(3, 'remote')">
+                        <div class="option-text">Fully remote</div>
+                        <div class="option-desc">Working from home or distributed locations</div>
+                    </div>
+                    <div class="option" onclick="selectOption(3, 'hybrid')">
+                        <div class="option-text">Hybrid (office + remote)</div>
+                        <div class="option-desc">Mix of office and remote work</div>
+                    </div>
+                    <div class="option" onclick="selectOption(3, 'office')">
+                        <div class="option-text">Traditional office</div>
+                        <div class="option-desc">Primarily in-person workplace</div>
+                    </div>
+                    <div class="option" onclick="selectOption(3, 'international')">
+                        <div class="option-text">International/Multicultural team</div>
+                        <div class="option-desc">Working across cultures and time zones</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Question 4: Learning Goal -->
+            <div class="question" id="q4">
+                <h2>What's your primary learning goal?</h2>
+                <p class="question-subtitle">What outcome are you hoping to achieve?</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(4, 'efficiency')">
+                        <div class="option-text">Increase personal efficiency</div>
+                        <div class="option-desc">Get more done in less time, better focus</div>
+                    </div>
+                    <div class="option" onclick="selectOption(4, 'communication')">
+                        <div class="option-text">Improve communication skills</div>
+                        <div class="option-desc">Better presentations, clearer messaging</div>
+                    </div>
+                    <div class="option" onclick="selectOption(4, 'leadership')">
+                        <div class="option-text">Develop leadership abilities</div>
+                        <div class="option-desc">Lead teams more effectively, emotional intelligence</div>
+                    </div>
+                    <div class="option" onclick="selectOption(4, 'innovation')">
+                        <div class="option-text">Think more strategically</div>
+                        <div class="option-desc">Product thinking, project management, systems thinking</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Question 5: Current Situation -->
+            <div class="question" id="q5">
+                <h2>Which situation sounds most like yours?</h2>
+                <p class="question-subtitle">This helps us understand your current challenges and recommend the most relevant course.</p>
+                <div class="options">
+                    <div class="option" onclick="selectOption(5, 'overwhelmed')">
+                        <div class="option-text">I often feel overwhelmed by tasks</div>
+                        <div class="option-desc">Too many priorities, struggling with focus and organization</div>
+                    </div>
+                    <div class="option" onclick="selectOption(5, 'communication')">
+                        <div class="option-text">I struggle with team communication</div>
+                        <div class="option-desc">Difficulty with presentations, cross-cultural teams, or expressing ideas</div>
+                    </div>
+                    <div class="option" onclick="selectOption(5, 'strategic')">
+                        <div class="option-text">I want to be more strategic in my work</div>
+                        <div class="option-desc">Moving from execution to planning, thinking like a leader</div>
+                    </div>
+                    <div class="option" onclick="selectOption(5, 'balance')">
+                        <div class="option-text">I need better work-life balance</div>
+                        <div class="option-desc">Managing stress, remote work challenges, or emotional wellbeing</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Results -->
+            <div class="results" id="results">
+                <h2>Your personalized course recommendations</h2>
+                <p class="results-subtitle">Based on your answers, here are the top 3 courses that match your needs:</p>
+                <div id="recommendations"></div>
+                <button class="btn restart-btn" onclick="restartQuiz()">Take quiz again</button>
+            </div>
+            
+            <!-- Navigation -->
+            <div class="navigation" id="navigation" style="display: none;">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const courses = {
+            'cross_cultural': {
+                title: 'Cross-cultural communication',
+                description: 'Master communication techniques that work across diverse backgrounds. Build stronger connections with international colleagues and clients.',
+                link: 'https://deeplinks.mindtickle.com/3IamqLO1LVb'
+            },
+            'attention_reset': {
+                title: 'Attention reset program',
+                description: 'Learn to stay focused and avoid digital distractions. Get practical tools to improve your concentration and end each day feeling accomplished.',
+                link: 'https://deeplinks.mindtickle.com/7CZrzWo2LVb'
+            },
+            'time_management': {
+                title: 'Time management',
+                description: 'Master the art of productivity with proven techniques like the Eisenhower Matrix and Pomodoro Technique. Beat procrastination and take control of your workload.',
+                link: 'https://deeplinks.mindtickle.com/UZNFVGq2LVb'
+            },
+            'speaking_easy': {
+                title: 'Speaking is easy',
+                description: 'Overcome the fear of public speaking and deliver compelling presentations. Learn to explain complex concepts simply and manage nerves effectively.',
+                link: 'https://deeplinks.mindtickle.com/5OCriDs2LVb'
+            },
+            'project_thinking': {
+                title: 'Project thinking',
+                description: 'Transform chaos into clarity with systematic project management. Learn to break down tasks, prioritize effectively, and become the driver of your workday.',
+                link: 'https://deeplinks.mindtickle.com/oAEgYtw2LVb'
+            },
+            'product_thinking': {
+                title: 'Product thinking',
+                description: 'See processes through users\' eyes and turn projects into valuable products. Learn to create effective customer journey maps and measure real value.',
+                link: 'https://deeplinks.mindtickle.com/kjth4fz2LVb'
+            },
+            'remote_work': {
+                title: 'Remote work',
+                description: 'Master the challenges of remote work with practical strategies for communication, team management, and maintaining professional standards.',
+                link: 'https://deeplinks.mindtickle.com/eTth6SB2LVb'
+            },
+            'stress_management': {
+                title: 'Stress management',
+                description: 'Learn evidence-based techniques to manage stress and anxiety. Discover how to cope with workplace pressures through mindfulness and other proven methods.',
+                link: 'https://deeplinks.mindtickle.com/pAx3AoE2LVb'
+            },
+            'emotional_intelligence': {
+                title: 'Emotional intelligence (EQ)',
+                description: 'Develop social awareness and relationship management skills. Learn to handle workplace challenges and create a positive team environment.',
+                link: 'https://deeplinks.mindtickle.com/mSOuPsG2LVb'
+            },
+            'learning_science': {
+                title: 'Learning that works: the science of effective adult learning',
+                description: 'Understand how adults learn best and apply evidence-based techniques to accelerate your professional development and skill acquisition.',
+                link: 'https://deeplinks.mindtickle.com/CVqNtTk6vUb'
+            }
+        };
+        
+        let currentQuestion = 0;
+        let answers = {};
+        let totalQuestions = 5;
+        
+        function startQuiz() {
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('navigation').style.display = 'flex';
+            currentQuestion = 1;
+            showQuestion(1);
+            updateProgress();
+        }
+        
+        function showQuestion(questionNum) {
+            // Hide all questions
+            document.querySelectorAll('.question').forEach(q => {
+                q.classList.remove('active');
+            });
+            
+            // Show current question
+            setTimeout(() => {
+                document.getElementById(`q${questionNum}`).classList.add('active');
+            }, 100);
+            
+            updateNavigation();
+        }
+        
+        function selectOption(questionNum, value) {
+            answers[questionNum] = value;
+            
+            // Visual feedback
+            const options = document.querySelectorAll(`#q${questionNum} .option`);
+            options.forEach(option => option.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            
+            // Enable next button
+            document.getElementById('nextBtn').disabled = false;
+        }
+        
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                updateProgress();
+                document.getElementById('nextBtn').disabled = true;
+            } else {
+                showResults();
+            }
+        }
+        
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                updateProgress();
+                document.getElementById('nextBtn').disabled = answers[currentQuestion] ? false : true;
+            }
+        }
+        
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+        
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 1;
+            nextBtn.disabled = !answers[currentQuestion];
+            
+            if (currentQuestion === totalQuestions) {
+                nextBtn.textContent = 'Get results';
+            } else {
+                nextBtn.textContent = 'Next';
+            }
+        }
+        
+        function calculateRecommendations() {
+            const scores = {};
+            
+            // Initialize all courses with base scores
+            Object.keys(courses).forEach(course => {
+                scores[course] = 0;
+            });
+            
+            // Role-based scoring
+            if (answers[1] === 'individual') {
+                scores.time_management += 25;
+                scores.attention_reset += 25;
+                scores.speaking_easy += 15;
+                scores.stress_management += 20;
+            } else if (answers[1] === 'team_lead') {
+                scores.project_thinking += 25;
+                scores.emotional_intelligence += 25;
+                scores.speaking_easy += 20;
+                scores.cross_cultural += 15;
+            } else if (answers[1] === 'executive') {
+                scores.emotional_intelligence += 30;
+                scores.speaking_easy += 25;
+                scores.project_thinking += 20;
+                scores.product_thinking += 20;
+            } else if (answers[1] === 'entrepreneur') {
+                scores.product_thinking += 25;
+                scores.project_thinking += 25;
+                scores.time_management += 20;
+                scores.speaking_easy += 15;
+            }
+            
+            // Challenge-based scoring
+            if (answers[2] === 'communication') {
+                scores.speaking_easy += 30;
+                scores.cross_cultural += 25;
+                scores.emotional_intelligence += 20;
+            } else if (answers[2] === 'productivity') {
+                scores.time_management += 30;
+                scores.attention_reset += 30;
+                scores.project_thinking += 20;
+            } else if (answers[2] === 'leadership') {
+                scores.emotional_intelligence += 30;
+                scores.project_thinking += 25;
+                scores.speaking_easy += 20;
+            } else if (answers[2] === 'stress') {
+                scores.stress_management += 35;
+                scores.attention_reset += 20;
+                scores.time_management += 15;
+            }
+            
+            // Environment-based scoring
+            if (answers[3] === 'remote') {
+                scores.remote_work += 35;
+                scores.attention_reset += 20;
+                scores.time_management += 15;
+            } else if (answers[3] === 'hybrid') {
+                scores.remote_work += 20;
+                scores.time_management += 15;
+                scores.emotional_intelligence += 15;
+            } else if (answers[3] === 'international') {
+                scores.cross_cultural += 35;
+                scores.emotional_intelligence += 20;
+                scores.speaking_easy += 15;
+            }
+            
+            // Goal-based scoring
+            if (answers[4] === 'efficiency') {
+                scores.time_management += 25;
+                scores.attention_reset += 25;
+                scores.project_thinking += 20;
+            } else if (answers[4] === 'communication') {
+                scores.speaking_easy += 30;
+                scores.cross_cultural += 20;
+                scores.emotional_intelligence += 15;
+            } else if (answers[4] === 'leadership') {
+                scores.emotional_intelligence += 30;
+                scores.project_thinking += 20;
+                scores.speaking_easy += 15;
+            } else if (answers[4] === 'innovation') {
+                scores.product_thinking += 30;
+                scores.project_thinking += 25;
+                scores.learning_science += 15;
+            }
+            
+            // Situation-based scoring (Question 5)
+            if (answers[5] === 'overwhelmed') {
+                scores.time_management += 30;
+                scores.attention_reset += 25;
+                scores.project_thinking += 20;
+                scores.stress_management += 15;
+            } else if (answers[5] === 'communication') {
+                scores.speaking_easy += 30;
+                scores.cross_cultural += 25;
+                scores.emotional_intelligence += 20;
+                scores.remote_work += 10;
+            } else if (answers[5] === 'strategic') {
+                scores.product_thinking += 30;
+                scores.project_thinking += 25;
+                scores.emotional_intelligence += 20;
+                scores.learning_science += 15;
+            } else if (answers[5] === 'balance') {
+                scores.stress_management += 35;
+                scores.remote_work += 25;
+                scores.attention_reset += 15;
+                scores.time_management += 10;
+            }
+            
+            // Convert to sorted array
+            const sortedCourses = Object.entries(scores)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 3)
+                .map(([course, score], index) => ({
+                    course,
+                    score: Math.min(100, Math.max(75, score)), // Normalize scores between 75-100
+                    rank: index + 1
+                }));
+            
+            return sortedCourses;
+        }
+        
+        function showResults() {
+            // Hide current question and navigation
+            document.querySelectorAll('.question').forEach(q => {
+                q.classList.remove('active');
+            });
+            document.getElementById('navigation').style.display = 'none';
+            
+            // Update progress to 100%
+            document.getElementById('progressFill').style.width = '100%';
+            
+            // Calculate and display recommendations
+            const recommendations = calculateRecommendations();
+            const recommendationsDiv = document.getElementById('recommendations');
+            
+            recommendationsDiv.innerHTML = recommendations.map(({course, score, rank}) => {
+                const courseData = courses[course];
+                return `
+                    <div class="course-card rank-${rank}">
+                        <div class="course-header">
+                            <div class="course-title">${courseData.title}</div>
+                            <div class="match-score">${score}% match</div>
+                        </div>
+                        <div class="course-desc">${courseData.description}</div>
+                        <a href="${courseData.link}" target="_blank" class="course-link">Start Learning →</a>
+                    </div>
+                `;
+            }).join('');
+            
+            // Show results
+            setTimeout(() => {
+                document.getElementById('results').classList.add('active');
+            }, 300);
+        }
+        
+        function restartQuiz() {
+            // Reset all variables
+            currentQuestion = 0;
+            answers = {};
+            
+            // Reset UI
+            document.getElementById('results').classList.remove('active');
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('intro').style.display = 'block';
+            document.getElementById('navigation').style.display = 'none';
+            
+            // Clear selections
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+        }
+    </script>
+</body>
+</html>
