@@ -320,21 +320,21 @@
             <!-- Question 1: Role -->
             <div class="question" id="q1">
                 <h2>What best describes your current role?</h2>
-                <p class="question-subtitle">This helps us understand your responsibilities and challenges.</p>
+                <p class="question-subtitle">Select all that apply - you can choose multiple roles or responsibilities.</p>
                 <div class="options">
-                    <div class="option" onclick="selectOption(1, 'individual')">
+                    <div class="option" onclick="toggleOption(1, 'individual')">
                         <div class="option-text">Individual contributor</div>
                         <div class="option-desc">Focus on personal productivity and skills</div>
                     </div>
-                    <div class="option" onclick="selectOption(1, 'team_lead')">
+                    <div class="option" onclick="toggleOption(1, 'team_lead')">
                         <div class="option-text">Team lead / Manager</div>
                         <div class="option-desc">Managing people and projects</div>
                     </div>
-                    <div class="option" onclick="selectOption(1, 'executive')">
+                    <div class="option" onclick="toggleOption(1, 'executive')">
                         <div class="option-text">Senior executive / Director</div>
                         <div class="option-desc">Strategic leadership and organization</div>
                     </div>
-                    <div class="option" onclick="selectOption(1, 'entrepreneur')">
+                    <div class="option" onclick="toggleOption(1, 'entrepreneur')">
                         <div class="option-text">Entrepreneur / Freelancer</div>
                         <div class="option-desc">Building and growing business</div>
                     </div>
@@ -343,22 +343,22 @@
             
             <!-- Question 2: Main Challenge -->
             <div class="question" id="q2">
-                <h2>What's your biggest workplace challenge?</h2>
-                <p class="question-subtitle">Select the area where you'd most like to improve.</p>
+                <h2>What are your biggest workplace challenges?</h2>
+                <p class="question-subtitle">Select all areas where you'd like to improve.</p>
                 <div class="options">
-                    <div class="option" onclick="selectOption(2, 'communication')">
+                    <div class="option" onclick="toggleOption(2, 'communication')">
                         <div class="option-text">Communication & Presentation</div>
                         <div class="option-desc">Speaking, presenting, cross-cultural interaction</div>
                     </div>
-                    <div class="option" onclick="selectOption(2, 'productivity')">
+                    <div class="option" onclick="toggleOption(2, 'productivity')">
                         <div class="option-text">Time & Productivity</div>
                         <div class="option-desc">Managing time, focus, and distractions</div>
                     </div>
-                    <div class="option" onclick="selectOption(2, 'leadership')">
+                    <div class="option" onclick="toggleOption(2, 'leadership')">
                         <div class="option-text">Leadership & Management</div>
                         <div class="option-desc">Leading teams, emotional intelligence, project management</div>
                     </div>
-                    <div class="option" onclick="selectOption(2, 'stress')">
+                    <div class="option" onclick="toggleOption(2, 'stress')">
                         <div class="option-text">Stress & Wellbeing</div>
                         <div class="option-desc">Managing stress, work-life balance, mental health</div>
                     </div>
@@ -367,22 +367,22 @@
             
             <!-- Question 3: Work Environment -->
             <div class="question" id="q3">
-                <h2>What's your work environment like?</h2>
-                <p class="question-subtitle">Understanding your context helps us recommend relevant skills.</p>
+                <h2>What describes your work environment?</h2>
+                <p class="question-subtitle">Select all that apply to your current work situation.</p>
                 <div class="options">
-                    <div class="option" onclick="selectOption(3, 'remote')">
+                    <div class="option" onclick="toggleOption(3, 'remote')">
                         <div class="option-text">Fully remote</div>
                         <div class="option-desc">Working from home or distributed locations</div>
                     </div>
-                    <div class="option" onclick="selectOption(3, 'hybrid')">
+                    <div class="option" onclick="toggleOption(3, 'hybrid')">
                         <div class="option-text">Hybrid (office + remote)</div>
                         <div class="option-desc">Mix of office and remote work</div>
                     </div>
-                    <div class="option" onclick="selectOption(3, 'office')">
+                    <div class="option" onclick="toggleOption(3, 'office')">
                         <div class="option-text">Traditional office</div>
                         <div class="option-desc">Primarily in-person workplace</div>
                     </div>
-                    <div class="option" onclick="selectOption(3, 'international')">
+                    <div class="option" onclick="toggleOption(3, 'international')">
                         <div class="option-text">International/Multicultural team</div>
                         <div class="option-desc">Working across cultures and time zones</div>
                     </div>
@@ -391,46 +391,46 @@
             
             <!-- Question 4: Learning Goal -->
             <div class="question" id="q4">
-                <h2>What's your primary learning goal?</h2>
-                <p class="question-subtitle">What outcome are you hoping to achieve?</p>
+                <h2>What are your primary learning goals?</h2>
+                <p class="question-subtitle">Select all that apply - you can choose multiple areas for development.</p>
                 <div class="options">
-                    <div class="option" onclick="selectOption(4, 'efficiency')">
+                    <div class="option" onclick="toggleOption(4, 'efficiency')">
                         <div class="option-text">Increase personal efficiency</div>
                         <div class="option-desc">Get more done in less time, better focus</div>
                     </div>
-                    <div class="option" onclick="selectOption(4, 'communication')">
+                    <div class="option" onclick="toggleOption(4, 'communication')">
                         <div class="option-text">Improve communication skills</div>
                         <div class="option-desc">Better presentations, clearer messaging</div>
                     </div>
-                    <div class="option" onclick="selectOption(4, 'leadership')">
+                    <div class="option" onclick="toggleOption(4, 'leadership')">
                         <div class="option-text">Develop leadership abilities</div>
                         <div class="option-desc">Lead teams more effectively, emotional intelligence</div>
                     </div>
-                    <div class="option" onclick="selectOption(4, 'innovation')">
-                        <div class="option-text">Think more strategically</div>
-                        <div class="option-desc">Product thinking, project management, systems thinking</div>
+                    <div class="option" onclick="toggleOption(4, 'wellbeing')">
+                        <div class="option-text">Improve wellbeing and balance</div>
+                        <div class="option-desc">Stress management, work-life balance, mental health</div>
                     </div>
                 </div>
             </div>
             
             <!-- Question 5: Current Situation -->
             <div class="question" id="q5">
-                <h2>Which situation sounds most like yours?</h2>
-                <p class="question-subtitle">This helps us understand your current challenges and recommend the most relevant course.</p>
+                <h2>Which situations sound like yours?</h2>
+                <p class="question-subtitle">Select all current challenges that resonate with you.</p>
                 <div class="options">
-                    <div class="option" onclick="selectOption(5, 'overwhelmed')">
+                    <div class="option" onclick="toggleOption(5, 'overwhelmed')">
                         <div class="option-text">I often feel overwhelmed by tasks</div>
                         <div class="option-desc">Too many priorities, struggling with focus and organization</div>
                     </div>
-                    <div class="option" onclick="selectOption(5, 'communication')">
+                    <div class="option" onclick="toggleOption(5, 'communication')">
                         <div class="option-text">I struggle with team communication</div>
                         <div class="option-desc">Difficulty with presentations, cross-cultural teams, or expressing ideas</div>
                     </div>
-                    <div class="option" onclick="selectOption(5, 'strategic')">
+                    <div class="option" onclick="toggleOption(5, 'strategic')">
                         <div class="option-text">I want to be more strategic in my work</div>
                         <div class="option-desc">Moving from execution to planning, thinking like a leader</div>
                     </div>
-                    <div class="option" onclick="selectOption(5, 'balance')">
+                    <div class="option" onclick="toggleOption(5, 'balance')">
                         <div class="option-text">I need better work-life balance</div>
                         <div class="option-desc">Managing stress, remote work challenges, or emotional wellbeing</div>
                     </div>
@@ -533,16 +533,27 @@
             updateNavigation();
         }
         
-        function selectOption(questionNum, value) {
-            answers[questionNum] = value;
+        function toggleOption(questionNum, value) {
+            // Initialize array if doesn't exist
+            if (!answers[questionNum]) {
+                answers[questionNum] = [];
+            }
             
-            // Visual feedback
-            const options = document.querySelectorAll(`#q${questionNum} .option`);
-            options.forEach(option => option.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
+            const index = answers[questionNum].indexOf(value);
+            if (index > -1) {
+                // Remove if already selected
+                answers[questionNum].splice(index, 1);
+                event.currentTarget.classList.remove('selected');
+            } else {
+                // Add if not selected (max 3 selections)
+                if (answers[questionNum].length < 3) {
+                    answers[questionNum].push(value);
+                    event.currentTarget.classList.add('selected');
+                }
+            }
             
-            // Enable next button
-            document.getElementById('nextBtn').disabled = false;
+            // Enable next button if at least one option is selected
+            document.getElementById('nextBtn').disabled = answers[questionNum].length === 0;
         }
         
         function nextQuestion() {
@@ -550,7 +561,7 @@
                 currentQuestion++;
                 showQuestion(currentQuestion);
                 updateProgress();
-                document.getElementById('nextBtn').disabled = true;
+                updateNavigation();
             } else {
                 showResults();
             }
@@ -561,7 +572,7 @@
                 currentQuestion--;
                 showQuestion(currentQuestion);
                 updateProgress();
-                document.getElementById('nextBtn').disabled = answers[currentQuestion] ? false : true;
+                updateNavigation();
             }
         }
         
@@ -575,7 +586,11 @@
             const nextBtn = document.getElementById('nextBtn');
             
             prevBtn.disabled = currentQuestion === 1;
-            nextBtn.disabled = !answers[currentQuestion];
+            
+            // Check if current question has answers
+            let hasAnswers = answers[currentQuestion] && answers[currentQuestion].length > 0;
+            
+            nextBtn.disabled = !hasAnswers;
             
             if (currentQuestion === totalQuestions) {
                 nextBtn.textContent = 'Get results';
@@ -592,103 +607,126 @@
                 scores[course] = 0;
             });
             
-            // Role-based scoring
-            if (answers[1] === 'individual') {
-                scores.time_management += 25;
-                scores.attention_reset += 25;
-                scores.speaking_easy += 15;
-                scores.stress_management += 20;
-            } else if (answers[1] === 'team_lead') {
-                scores.project_thinking += 25;
-                scores.emotional_intelligence += 25;
-                scores.speaking_easy += 20;
-                scores.cross_cultural += 15;
-            } else if (answers[1] === 'executive') {
-                scores.emotional_intelligence += 30;
-                scores.speaking_easy += 25;
-                scores.project_thinking += 20;
-                scores.product_thinking += 20;
-            } else if (answers[1] === 'entrepreneur') {
-                scores.product_thinking += 25;
-                scores.project_thinking += 25;
-                scores.time_management += 20;
-                scores.speaking_easy += 15;
+            // Role-based scoring (Question 1)
+            if (answers[1] && Array.isArray(answers[1])) {
+                answers[1].forEach(role => {
+                    if (role === 'individual') {
+                        scores.time_management += 25;
+                        scores.attention_reset += 25;
+                        scores.speaking_easy += 15;
+                        scores.stress_management += 20;
+                    } else if (role === 'team_lead') {
+                        scores.project_thinking += 25;
+                        scores.emotional_intelligence += 25;
+                        scores.speaking_easy += 20;
+                        scores.cross_cultural += 15;
+                    } else if (role === 'executive') {
+                        scores.emotional_intelligence += 30;
+                        scores.speaking_easy += 25;
+                        scores.project_thinking += 20;
+                        scores.product_thinking += 20;
+                    } else if (role === 'entrepreneur') {
+                        scores.product_thinking += 25;
+                        scores.project_thinking += 25;
+                        scores.time_management += 20;
+                        scores.speaking_easy += 15;
+                    }
+                });
             }
             
-            // Challenge-based scoring
-            if (answers[2] === 'communication') {
-                scores.speaking_easy += 30;
-                scores.cross_cultural += 25;
-                scores.emotional_intelligence += 20;
-            } else if (answers[2] === 'productivity') {
-                scores.time_management += 30;
-                scores.attention_reset += 30;
-                scores.project_thinking += 20;
-            } else if (answers[2] === 'leadership') {
-                scores.emotional_intelligence += 30;
-                scores.project_thinking += 25;
-                scores.speaking_easy += 20;
-            } else if (answers[2] === 'stress') {
-                scores.stress_management += 35;
-                scores.attention_reset += 20;
-                scores.time_management += 15;
+            // Challenge-based scoring (Question 2)
+            if (answers[2] && Array.isArray(answers[2])) {
+                answers[2].forEach(challenge => {
+                    if (challenge === 'communication') {
+                        scores.speaking_easy += 30;
+                        scores.cross_cultural += 25;
+                        scores.emotional_intelligence += 20;
+                    } else if (challenge === 'productivity') {
+                        scores.time_management += 30;
+                        scores.attention_reset += 30;
+                        scores.project_thinking += 20;
+                    } else if (challenge === 'leadership') {
+                        scores.emotional_intelligence += 30;
+                        scores.project_thinking += 25;
+                        scores.speaking_easy += 20;
+                    } else if (challenge === 'stress') {
+                        scores.stress_management += 35;
+                        scores.attention_reset += 20;
+                        scores.time_management += 15;
+                    }
+                });
             }
             
-            // Environment-based scoring
-            if (answers[3] === 'remote') {
-                scores.remote_work += 35;
-                scores.attention_reset += 20;
-                scores.time_management += 15;
-            } else if (answers[3] === 'hybrid') {
-                scores.remote_work += 20;
-                scores.time_management += 15;
-                scores.emotional_intelligence += 15;
-            } else if (answers[3] === 'international') {
-                scores.cross_cultural += 35;
-                scores.emotional_intelligence += 20;
-                scores.speaking_easy += 15;
+            // Environment-based scoring (Question 3)
+            if (answers[3] && Array.isArray(answers[3])) {
+                answers[3].forEach(env => {
+                    if (env === 'remote') {
+                        scores.remote_work += 35;
+                        scores.attention_reset += 20;
+                        scores.time_management += 15;
+                    } else if (env === 'hybrid') {
+                        scores.remote_work += 20;
+                        scores.time_management += 15;
+                        scores.emotional_intelligence += 15;
+                    } else if (env === 'office') {
+                        scores.emotional_intelligence += 20;
+                        scores.speaking_easy += 15;
+                    } else if (env === 'international') {
+                        scores.cross_cultural += 35;
+                        scores.emotional_intelligence += 20;
+                        scores.speaking_easy += 15;
+                    }
+                });
             }
             
-            // Goal-based scoring
-            if (answers[4] === 'efficiency') {
-                scores.time_management += 25;
-                scores.attention_reset += 25;
-                scores.project_thinking += 20;
-            } else if (answers[4] === 'communication') {
-                scores.speaking_easy += 30;
-                scores.cross_cultural += 20;
-                scores.emotional_intelligence += 15;
-            } else if (answers[4] === 'leadership') {
-                scores.emotional_intelligence += 30;
-                scores.project_thinking += 20;
-                scores.speaking_easy += 15;
-            } else if (answers[4] === 'innovation') {
-                scores.product_thinking += 30;
-                scores.project_thinking += 25;
-                scores.learning_science += 15;
+            // Goal-based scoring (Question 4)
+            if (answers[4] && Array.isArray(answers[4])) {
+                answers[4].forEach(goal => {
+                    if (goal === 'efficiency') {
+                        scores.time_management += 25;
+                        scores.attention_reset += 25;
+                        scores.project_thinking += 20;
+                    } else if (goal === 'communication') {
+                        scores.speaking_easy += 30;
+                        scores.cross_cultural += 20;
+                        scores.emotional_intelligence += 15;
+                    } else if (goal === 'leadership') {
+                        scores.emotional_intelligence += 30;
+                        scores.project_thinking += 20;
+                        scores.speaking_easy += 15;
+                    } else if (goal === 'wellbeing') {
+                        scores.stress_management += 35;
+                        scores.attention_reset += 20;
+                        scores.remote_work += 15;
+                    }
+                });
             }
             
             // Situation-based scoring (Question 5)
-            if (answers[5] === 'overwhelmed') {
-                scores.time_management += 30;
-                scores.attention_reset += 25;
-                scores.project_thinking += 20;
-                scores.stress_management += 15;
-            } else if (answers[5] === 'communication') {
-                scores.speaking_easy += 30;
-                scores.cross_cultural += 25;
-                scores.emotional_intelligence += 20;
-                scores.remote_work += 10;
-            } else if (answers[5] === 'strategic') {
-                scores.product_thinking += 30;
-                scores.project_thinking += 25;
-                scores.emotional_intelligence += 20;
-                scores.learning_science += 15;
-            } else if (answers[5] === 'balance') {
-                scores.stress_management += 35;
-                scores.remote_work += 25;
-                scores.attention_reset += 15;
-                scores.time_management += 10;
+            if (answers[5] && Array.isArray(answers[5])) {
+                answers[5].forEach(situation => {
+                    if (situation === 'overwhelmed') {
+                        scores.time_management += 30;
+                        scores.attention_reset += 25;
+                        scores.project_thinking += 20;
+                        scores.stress_management += 15;
+                    } else if (situation === 'communication') {
+                        scores.speaking_easy += 30;
+                        scores.cross_cultural += 25;
+                        scores.emotional_intelligence += 20;
+                        scores.remote_work += 10;
+                    } else if (situation === 'strategic') {
+                        scores.product_thinking += 30;
+                        scores.project_thinking += 25;
+                        scores.emotional_intelligence += 20;
+                        scores.learning_science += 15;
+                    } else if (situation === 'balance') {
+                        scores.stress_management += 35;
+                        scores.remote_work += 25;
+                        scores.attention_reset += 15;
+                        scores.time_management += 10;
+                    }
+                });
             }
             
             // Convert to sorted array
